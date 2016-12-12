@@ -1,9 +1,7 @@
 #! /bin/bash
 
-nc_timeout=1
-nc_cmd="nc -w ${nc_timeout}"
-
-timeout_cmd="timeout --preserve-status ${nc_timeout}"
+tcp_timeout=1
+timeout_cmd="timeout --preserve-status ${tcp_timeout}"
 
 data_json=""
 data_json_head='{"data":['
@@ -68,7 +66,7 @@ while read line;do
   else
     echo "\"${redis_host}\" redis[${key}] ${value}" >> ${data_file}
   fi
-done < <(echo info|${timeout_cmd} ${nc_cmd} ${redis_addr} ${redis_port})
+done < <(${timeout_cmd} /bin/bash -c "exec 3<> /dev/tcp/${redis_addr}/${redis_port}; printf 'info\r\n' >&3; cat <&3")
 
 data_json="${data_json}${data_json_tail}"
 echo "\"${redis_host}\" redis.discovery ${data_json}" > ${data_json_file}
