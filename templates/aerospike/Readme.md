@@ -8,3 +8,4 @@ Also, you have to install aerospike tools on your proxy for this script to work.
 Then import this template and assign it to host you need.
 That's it.
 
+Aerospike Tools: http://www.aerospike.com/download/tools/3.10.2/
