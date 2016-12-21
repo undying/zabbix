@@ -1,0 +1,128 @@
+
+##########################################################
+# shared functions for aerospike discovery/check scripts #
+##########################################################
+
+function string_to_bool(){
+  string=${1}
+
+  case ${string} in
+    [Ff][Aa][Ll][Ss][Ee])
+      echo 0
+      ;;
+    *)
+      echo 1
+  esac
+
+  return 0
+}
+
+function value_type(){
+  local value=${1}
+
+  case ${value} in
+    [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])
+      echo bool
+      ;;
+    [0-9]*)
+      echo int
+      ;;
+    *)
+      echo string
+  esac
+
+  return 0
+}
+
+
+function as_get_config(){
+  local aerospike_host=${1}
+  local asinfo_cmd=${2}
+  local data_file=${3}
+
+  while read line;do
+    IFS="=" read key value <<<"${line}"
+    [ -n "${metrics_config_whitelist[${key}]}" ] || continue
+
+    local v_type=$(value_type ${value})
+    local v_multiplier=${metrics_config_multiplier[${key}]}
+    [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
+
+    echo "\"${aerospike_host}\" as[get-config,${v_type},${key}] ${value}" >> ${data_file}
+  done < <(${asinfo_cmd})
+}
+
+function as_statistics(){
+  local aerospike_host=${1}
+  local asinfo_cmd=${2}
+  local data_file=${3}
+
+  while read line;do
+    IFS="=" read key value <<<"${line}"
+
+    local v_type=$(value_type ${value})
+    [ "${v_type}" == "int" -a -n "${metrics_statistics_counters[${key}]}" ] && v_type=count
+
+    local v_multiplier=${metrics_statistics_multiplier[${key}]}
+    [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
+
+    echo "\"${aerospike_host}\" as_statistics[${v_type},${key}] ${value}" >> ${data_file}
+  done < <(${asinfo_cmd})
+}
+
+function as_sets_stat(){
+  local aerospike_namespace=${1}
+  local aerospike_host=${2}
+  local asinfo_cmd=${3}
+  local data_file=${4}
+
+  while read line;do
+    local as_set=${line##*set=}
+    local as_set=${as_set%%:*}
+
+    IFS=":"
+    for set_line in ${line#*:*:};do
+      IFS="=" read key value <<<"${set_line}"
+
+      local v_type=$(value_type ${value})
+      case ${v_type} in
+        int)
+          [ -n "${metrics_set_counters[${key}]}" ] && v_type=count
+        ;;
+        bool)
+          local value=$(string_to_bool ${value})
+        ;;
+      esac
+
+      echo "\"${aerospike_host}\" as_set[${aerospike_namespace},${as_set},${v_type},${key}] ${value}" >> ${data_file}
+    done
+    unset IFS
+  done < <(${asinfo_cmd})
+}
+
+function as_ns_stat(){
+  local aerospike_namespace=${1}
+  local aerospike_host=${2}
+  local asinfo_cmd=${3}
+  local data_file=${4}
+
+  while read line;do
+    IFS="=" read key value <<<"${line}"
+
+    local v_type=$(value_type ${value})
+    [ -z "${metrics_namespace_blacklist[${key}]}" ] || continue
+
+    case ${v_type} in
+      int)
+        [ -n "${metrics_namespace_counters[${key}]}" ] && v_type=count
+        ;;
+      bool)
+        value=$(string_to_bool ${value})
+        ;;
+    esac
+
+    echo "\"${aerospike_host}\" as_namespace[${aerospike_namespace},${v_type},${key}] ${value}" >> ${data_file}
+  done < <(${asinfo_cmd})
+}
+
+# vi:syntax=sh

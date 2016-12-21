@@ -1,0 +1,248 @@
+
+##################################################################
+# shared default variables for aerospike discovery/check scripts #
+##################################################################
+
+declare -A metrics_set_counters=(
+  [objects]=1
+  [tombstones]=1
+  [stop-writes-count]=1
+)
+declare -A metrics_set_units=(
+  [memory_data_bytes]=B
+)
+
+declare -A metrics_namespace_counters=(
+  [objects]=1
+  [sub_objects]=1
+  [master_objects]=1
+  [master_sub_objects]=1
+  [prole_objects]=1
+  [prole_sub_objects]=1
+  [expired_objects]=1
+  [client_write_success]=1
+  [client_write_error]=1
+  [client_write_timeout]=1
+  [xdr_write_success]=1
+  [xdr_write_error]=1
+  [xdr_write_timeout]=1
+  [client_delete_success]=1
+  [client_delete_error]=1
+  [client_delete_timeout]=1
+  [client_delete_not_found]=1
+  [client_udf_complete]=1
+  [client_udf_error]=1
+  [client_udf_timeout]=1
+  [client_lang_read_success]=1
+  [client_lang_write_success]=1
+  [client_lang_delete_success]=1
+  [client_lang_error]=1
+  [batch_sub_tsvc_error]=1
+  [batch_sub_tsvc_timeout]=1
+  [batch_sub_proxy_complete]=1
+  [batch_sub_proxy_error]=1
+  [batch_sub_proxy_timeout]=1
+  [batch_sub_read_success]=1
+  [batch_sub_read_error]=1
+  [batch_sub_read_timeout]=1
+  [batch_sub_read_not_found]=1
+  [udf_sub_tsvc_error]=1
+  [udf_sub_tsvc_timeout]=1
+  [udf_sub_udf_complete]=1
+  [udf_sub_udf_error]=1
+  [udf_sub_udf_timeout]=1
+  [udf_sub_lang_read_success]=1
+  [udf_sub_lang_write_success]=1
+  [udf_sub_lang_delete_success]=1
+  [udf_sub_lang_error]=1
+  [retransmit_client_read_dup_res]=1
+  [retransmit_client_write_dup_res]=1
+  [retransmit_client_write_repl_write]=1
+  [retransmit_client_delete_dup_res]=1
+  [retransmit_client_delete_repl_write]=1
+  [retransmit_client_udf_dup_res]=1
+  [retransmit_client_udf_repl_write]=1
+  [retransmit_batch_sub_dup_res]=1
+  [retransmit_udf_sub_dup_res]=1
+  [retransmit_udf_sub_repl_write]=1
+  [retransmit_nsup_repl_write]=1
+  [scan_basic_complete]=1
+  [scan_basic_error]=1
+  [scan_basic_abort]=1
+  [scan_aggr_complete]=1
+  [scan_aggr_error]=1
+  [scan_aggr_abort]=1
+  [scan_udf_bg_complete]=1
+  [scan_udf_bg_error]=1
+  [scan_udf_bg_abort]=1
+  [query_reqs]=1
+  [query_fail]=1
+  [query_short_queue_full]=1
+  [query_long_queue_full]=1
+  [query_short_reqs]=1
+  [query_long_reqs]=1
+  [query_agg]=1
+  [query_agg_success]=1
+  [query_agg_error]=1
+  [query_agg_abort]=1
+  [query_agg_avg_rec_count]=1
+  [query_lookups]=1
+  [query_lookup_success]=1
+  [query_lookup_error]=1
+  [query_lookup_abort]=1
+  [query_lookup_avg_rec_count]=1
+  [query_udf_bg_success]=1
+  [query_udf_bg_failure]=1
+  [geo_region_query_reqs]=1
+  [geo_region_query_cells]=1
+  [geo_region_query_points]=1
+  [geo_region_query_falsepos]=1
+  [fail_xdr_forbidden]=1
+  [fail_key_busy]=1
+  [fail_generation]=1
+  [fail_record_too_big]=1
+  [deleted_last_bin]=1
+  [ldt_reads]=1
+  [ldt_read_success]=1
+  [ldt_deletes]=1
+  [ldt_delete_success]=1
+  [ldt_writes]=1
+  [ldt_write_success]=1
+  [ldt_updates]=1
+  [ldt_gc_io]=1
+  [ldt_gc_cnt]=1
+  [ldt_randomizer_retry]=1
+  [ldt_errors]=1
+  [ldt_err_toprec_notfound]=1
+  [ldt_err_item_notfound]=1
+  [ldt_err_internal]=1
+  [ldt_err_unique_key_violation]=1
+  [ldt_err_insert_fail]=1
+  [ldt_err_delete_fail]=1
+  [ldt_err_search_fail]=1
+  [ldt_err_version_mismatch]=1
+  [ldt_err_capacity_exceeded]=1
+  [ldt_err_param]=1
+  [ldt_err_op_bintype_mismatch]=1
+  [ldt_err_too_many_open_subrec]=1
+  [ldt_err_subrec_not_found]=1
+  [ldt_err_bin_does_not_exist]=1
+  [ldt_err_bin_exits]=1
+  [ldt_err_bin_damaged]=1
+  [ldt_err_toprec_internal]=1
+  [ldt_err_subrec_internal]=1
+  [ldt_err_filer]=1
+  [ldt_err_key]=1
+  [ldt_err_createspec]=1
+  [ldt_err_usermodule]=1
+  [ldt_err_input_too_large]=1
+  [ldt_err_ldt_not_enabled]=1
+  [ldt_err_unknown]=1
+  [cold-start-evict-ttl]=1
+)
+declare -A metrics_namespace_blacklist=(
+  [storage-engine.device]=1
+)
+declare -A metrics_namespace_units=(
+  [device_total_bytes]=B
+  [device_used_bytes]=B
+  [memory_used_bytes]=B
+  [memory_used_data_bytes]=B
+  [memory_used_index_bytes]=B
+  [memory_used_sindex_bytes]=B
+
+  [cache_read_pct]=%
+  [device_available_pct]=%
+  [device_free_pct]=%
+  [evict-tenths-pct]=%
+  [high-water-disk-pct]=%
+  [high-water-memory-pct]=%
+  [memory_free_pct]=%
+  [nsup_cycle_sleep_pct]=%
+  [stop-writes-pct]=%
+  [storage-engine.defrag-lwm-pct]=%
+  [storage-engine.min-avail-pct]=%
+)
+
+declare -A metrics_statistics_counters=(
+  [demarshal_error]=1
+  [early_tsvc_batch_sub_error]=1
+  [early_tsvc_client_error]=1
+  [early_tsvc_udf_sub_error]=1
+  [heartbeat_received_foreign]=1
+  [heartbeat_received_self]=1
+  [info_complete]=1
+  [objects]=1
+  [reaped_fds]=1
+  [sub_objects]=1
+  [tombstones]=1
+  [batch_index_initiate]=1
+  [batch_index_complete]=1
+  [batch_index_error]=1
+  [batch_index_timeout]=1
+  [batch_index_unused_buffers]=1
+  [batch_index_huge_buffers]=1
+  [batch_index_created_buffers]=1
+  [batch_index_destroyed_buffers]=1
+  [batch_initiate]=1
+  [batch_queue]=1
+  [batch_error]=1
+  [batch_timeout]=1
+  [sindex_ucgarbage_found]=1
+  [sindex_gc_locktimedout]=1
+  [sindex_gc_inactivity_dur]=1
+  [sindex_gc_activity_dur]=1
+  [sindex_gc_list_creation_time]=1
+  [sindex_gc_list_deletion_time]=1
+  [sindex_gc_objects_validated]=1
+  [sindex_gc_garbage_found]=1
+  [sindex_gc_garbage_cleaned]=1
+  [fabric_msgs_sent]=1
+  [fabric_msgs_rcvd]=1
+)
+declare -A metrics_statistics_units=(
+  [heap_active_kbytes]=B
+  [heap_allocated_kbytes]=B
+  [heap_mapped_kbytes]=B
+
+  [system_free_mem_pct]=%
+  [heap_efficiency_pct]=%
+)
+declare -A metrics_statistics_multiplier=(
+  [heap_active_kbytes]=1024
+  [heap_allocated_kbytes]=1024
+  [heap_mapped_kbytes]=1024
+)
+
+declare -A metrics_config_whitelist=(
+  [proto-fd-max]=1
+)
+
+### aerospike connection/cmd params ###
+aerospike_host=${aerospike_host:-127.0.0.1}
+aerospike_addr=${aerospike_addr:-${aerospike_host}}
+aerospike_port=${aerospike_port:-3000}
+
+aerospike_command=${aerospike_command:-status}
+
+asinfo_args="-l -h ${aerospike_host} -p ${aerospike_port}"
+asinfo_cmd="$(which asinfo) ${asinfo_args}"
+
+if [ $? -ne 0 ];then
+  echo "no asinfo binary found. you need to install aerospike tool to use this script\ndetails: http://www.aerospike.com/download/tools/3.10.2/"
+  exit 1
+fi
+###
+
+### zabbix_sender params ###
+zabbix_host=${zabbix_host:-127.0.0.1}
+zabbix_port=${zabbix_port:-10051}
+
+zabbix_sender_cmd="$(which zabbix_sender) -vv -z ${zabbix_host} -p ${zabbix_port}"
+
+if [ $? -ne 0 ];then
+  echo "no zabbix_sender binary found."
+  exit 1
+fi
+
+# vi:syntax=sh
