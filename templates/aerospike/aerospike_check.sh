@@ -29,10 +29,13 @@ while getopts 'c:n:h:a:p:Z:P:' arg;do
   esac
 done
 
+
 script_path=${BASH_SOURCE[0]%/*}
 
 [ -e ${script_path}/aerospike.defaults ] && . ${script_path}/aerospike.defaults || exit 1
 [ -e ${script_path}/aerospike.scripts ] && . ${script_path}/aerospike.scripts || exit 1
+
+trap cleanup EXIT
 
 script_name=${0%%.sh}
 script_name=${script_name##*/}
@@ -43,18 +46,19 @@ if [ "${aerospike_command}" == "namespace" -a -z "${aerospike_namespace}" ];then
   exit 1
 fi
 
+
 case ${aerospike_command} in
-  get-config)
-    asinfo_cmd+=" -v get-config"
-    as_get_config \
+  get-config|statistics)
+    asinfo_cmd+=" -v ${aerospike_command}"
+    ${command_function[${aerospike_command}]} \
       "${aerospike_host}" \
       "${asinfo_cmd}" \
       "${data_file}"
     ;;
 
-  sets)
+  sets|namespace)
     asinfo_cmd+=" -v ${aerospike_command}/${aerospike_namespace}"
-    as_sets_stat \
+    ${command_function[${aerospike_command}]} \
       "${aerospike_namespace}" \
       "${aerospike_host}" \
       "${asinfo_cmd}" \
@@ -62,25 +66,16 @@ case ${aerospike_command} in
     ;;
 
   status)
-    rm ${data_file}
-    exec ${asinfo_cmd} -v status
-    ;;
+    tries_left=3
+    while [ ${tries_left} -gt 0 ];do
+      tries_left=$[tries_left-1]
+      out=$(${asinfo_cmd} -v status)
 
-  namespace)
-    asinfo_cmd+=" -v ${aerospike_command}/${aerospike_namespace}"
-    as_ns_stat \
-      "${aerospike_namespace}" \
-      "${aerospike_host}" \
-      "${asinfo_cmd}" \
-      "${data_file}"
-    ;;
-
-  statistics)
-    asinfo_cmd+=" -v ${aerospike_command}"
-    as_statistics \
-      "${aerospike_host}" \
-      "${asinfo_cmd}" \
-      "${data_file}"
+      if [ $? -eq 0 ];then
+        echo ${out}
+        exit
+      fi
+    done
     ;;
 
   *)
@@ -89,5 +84,4 @@ case ${aerospike_command} in
 esac
 
 ${zabbix_sender_cmd} -i ${data_file}
-rm ${data_file}
 

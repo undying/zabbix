@@ -20,6 +20,7 @@ while getopts 'c:h:a:p:' arg;do
   esac
 done
 
+
 script_path=${BASH_SOURCE[0]%/*}
 
 [ -e ${script_path}/aerospike.defaults ] && . ${script_path}/aerospike.defaults || exit 1
@@ -30,6 +31,7 @@ data_json_tail=']}'
 
 data_json="${data_json_head}"
 data_json_comma=""
+
 
 count=0
 while read line;do

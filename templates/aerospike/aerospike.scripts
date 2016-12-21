@@ -3,6 +3,10 @@
 # shared functions for aerospike discovery/check scripts #
 ##########################################################
 
+function cleanup(){
+  rm -f ${data_file}
+}
+
 function string_to_bool(){
   string=${1}
 
