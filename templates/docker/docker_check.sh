@@ -19,13 +19,13 @@ while getopts 'dh:z:p:' opt;do
 done
 
 check_host=${check_host:-${HOSTNAME}}
-zabbix_send_data=$(mktemp --suffix=-zabbix_send)
-zabbix_send_cmd="$(which zabbix_send) --input-file ${zabbix_send_data}"
+zabbix_data=/tmp/.docker_stats
+zabbix_data_tmp=$(mktemp --suffix=-zabbix_send)
 
 [ -n "${zabbix_server}" ] && zabbix_send_cmd+=" --zabbix-server ${zabbix_server}"
 [ -n "${zabbix_port}" ] && zabbix_send_cmd+=" --port ${zabbix_port}"
 
-function cleanup(){     rm -f ${zabbix_send_data}; }
+function cleanup(){     rm -f ${zabbix_data_tmp}; }
 trap cleanup EXIT
 
 declare -A docker_stats=()
@@ -99,13 +99,16 @@ function docker_stats(){
 
       local unit=${docker_stats_metric_bytes[${key}]}
       if [ -z "${unit}" ];then
-        echo "docker_stats[${id},${key}] ${!key//%/}"
+        echo "docker_stats[${id},${key}] ${!key//%/}" >> ${zabbix_data_tmp}
         continue
       fi
 
-      echo "docker_stats[${id},${key}]" $(awk "BEGIN {print int(${!key} * ${docker_stats_multiplier[${!unit}]})}")
+      echo "docker_stats[${id},${key}]" $(awk "BEGIN {print int(${!key} * ${docker_stats_multiplier[${!unit}]})}") >> ${zabbix_data_tmp}
     done
   done < <(docker stats --no-stream)
+
+  mv ${zabbix_data_tmp} ${zabbix_data}
+  echo $[count-1]
 }
 
 
