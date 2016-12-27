@@ -19,8 +19,10 @@ while getopts 'dh:z:p:' opt;do
 done
 
 check_host=${check_host:-${HOSTNAME}}
+
 zabbix_data=/tmp/.docker_stats
 zabbix_data_tmp=$(mktemp --suffix=-zabbix_send)
+chmod 644 ${zabbix_data_tmp}
 
 [ -n "${zabbix_server}" ] && zabbix_send_cmd+=" --zabbix-server ${zabbix_server}"
 [ -n "${zabbix_port}" ] && zabbix_send_cmd+=" --port ${zabbix_port}"
