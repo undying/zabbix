@@ -1,2 +1,5 @@
 Defaults:zabbix !requiretty
 zabbix ALL=(ALL) NOPASSWD:/opt/zabbix/docker/docker_check.sh
+
+# vi:syntax=sudoers
+
