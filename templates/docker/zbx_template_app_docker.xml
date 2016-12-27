@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2016-12-27T16:28:31Z</date>
+    <date>2016-12-27T16:34:55Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -29,7 +29,7 @@
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>docker_collect[]</key>
+                    <key>docker_collect</key>
                     <delay>15</delay>
                     <history>14</history>
                     <trends>365</trends>
@@ -73,7 +73,7 @@
                     <type>0</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>docker_discovery[]</key>
+                    <key>docker_discovery</key>
                     <delay>30</delay>
                     <status>0</status>
                     <allowed_hosts/>
