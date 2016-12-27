@@ -70,12 +70,12 @@ function docker_discovery(){
   local count=0
   for container_id in $(docker ps --quiet);do
     [ ${count} -eq 0 ] || json_comma=,
-    docker_discovery_json+="${json_comma}{\"Id\":\"${container_id}\""
+    docker_discovery_json+="${json_comma}{\"{#ID}\":\"${container_id}\""
 
     IFS=,
     for line in $(docker inspect --format "${docker_inspect_format}" ${container_id});do
       IFS=":" read key value <<<"${line}"
-      docker_discovery_json+=",\"${key}\":\"${value#/}\""
+      docker_discovery_json+=",\"{#${key^^}}\":\"${value#/}\""
     done
     unset IFS
 
