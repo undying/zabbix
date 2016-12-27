@@ -27,7 +27,7 @@ chmod 644 ${zabbix_data_tmp}
 [ -n "${zabbix_server}" ] && zabbix_send_cmd+=" --zabbix-server ${zabbix_server}"
 [ -n "${zabbix_port}" ] && zabbix_send_cmd+=" --port ${zabbix_port}"
 
-function cleanup(){     rm -f ${zabbix_data_tmp}; }
+function cleanup(){ rm -f ${zabbix_data_tmp}; }
 trap cleanup EXIT
 
 declare -A docker_stats=()
