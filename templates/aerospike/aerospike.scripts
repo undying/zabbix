@@ -7,27 +7,10 @@ function cleanup(){
   rm -f ${data_file}
 }
 
-function string_to_bool(){
-  string=${1}
-
-  case ${string} in
-    [Ff][Aa][Ll][Ss][Ee])
-      echo 0
-      ;;
-    *)
-      echo 1
-  esac
-
-  return 0
-}
-
 function value_type(){
   local value=${1}
 
   case ${value} in
-    [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])
-      echo bool
-      ;;
     [0-9]*)
       echo int
       ;;
@@ -36,6 +19,21 @@ function value_type(){
   esac
 
   return 0
+}
+
+function normalize_value(){
+  local value=${1}
+
+  case ${value} in
+    [Tt][Rr][Uu][Ee])
+      echo 1
+      ;;
+    [Ff][Aa][Ll][Ss][Ee])
+      echo 0
+      ;;
+    *)
+      echo ${value}
+  esac
 }
 
 
@@ -48,7 +46,9 @@ function as_get_config(){
     IFS="=" read key value <<<"${line}"
     [ -n "${metrics_config_whitelist[${key}]}" ] || continue
 
+    value=$(normalize_value ${value})
     local v_type=$(value_type ${value})
+
     local v_multiplier=${metrics_config_multiplier[${key}]}
     [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
 
@@ -64,8 +64,10 @@ function as_statistics(){
   while read line;do
     IFS="=" read key value <<<"${line}"
 
+    value=$(normalize_value ${value})
     local v_type=$(value_type ${value})
-    [ "${v_type}" == "int" -a -n "${metrics_statistics_counters[${key}]}" ] && v_type=count
+
+    [ -n "${metrics_statistics_counters[${key}]}" ] && v_type=count
 
     local v_multiplier=${metrics_statistics_multiplier[${key}]}
     [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
@@ -88,15 +90,10 @@ function as_sets_stat(){
     for set_line in ${line#*:*:};do
       IFS="=" read key value <<<"${set_line}"
 
+      value=$(normalize_value ${value})
       local v_type=$(value_type ${value})
-      case ${v_type} in
-        int)
-          [ -n "${metrics_set_counters[${key}]}" ] && v_type=count
-        ;;
-        bool)
-          local value=$(string_to_bool ${value})
-        ;;
-      esac
+
+      [ -n "${metrics_set_counters[${key}]}" ] && v_type=count
 
       echo "\"${aerospike_host}\" as_set[${aerospike_namespace},${as_set},${v_type},${key}] ${value}" >> ${data_file}
     done
@@ -113,17 +110,12 @@ function as_ns_stat(){
   while read line;do
     IFS="=" read key value <<<"${line}"
 
-    local v_type=$(value_type ${value})
     [ -z "${metrics_namespace_blacklist[${key}]}" ] || continue
 
-    case ${v_type} in
-      int)
-        [ -n "${metrics_namespace_counters[${key}]}" ] && v_type=count
-        ;;
-      bool)
-        value=$(string_to_bool ${value})
-        ;;
-    esac
+    value=$(normalize_value ${value})
+    local v_type=$(value_type ${value})
+
+    [ -z "${metrics_namespace_counters[${key}]}" ] || v_type=count
 
     echo "\"${aerospike_host}\" as_namespace[${aerospike_namespace},${v_type},${key}] ${value}" >> ${data_file}
   done < <(${asinfo_cmd})

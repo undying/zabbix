@@ -66,16 +66,7 @@ case ${aerospike_command} in
     ;;
 
   status)
-    tries_left=3
-    while [ ${tries_left} -gt 0 ];do
-      tries_left=$[tries_left-1]
-      out=$(${asinfo_cmd} -v status)
-
-      if [ $? -eq 0 ];then
-        echo ${out}
-        exit
-      fi
-    done
+    ${asinfo_cmd} -v status
     ;;
 
   *)
