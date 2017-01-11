@@ -61,21 +61,6 @@ while read line;do
       unset IFS
       ;;
 
-    get-config)
-      IFS="=" read key value <<<"${line}"
-      [ -n "${metrics_config_whitelist[${key}]}" ] || continue
-
-      [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
-
-      value=$(normalize_value ${value})
-      v_type=$(value_type ${value})
-      v_unit=${metrics_config_units[${key}]}
-      v_multiplier=${metrics_config_multiplier[${key}]}
-
-      data_json+="${data_json_comma}{\"{#AS_CONFIG_METRIC_NAME}\":\"${key}\",\"{#AS_CONFIG_METRIC_TYPE}\":\"${v_type}\",\"{#AS_CONFIG_METRIC_UNIT}\":\"${v_unit}\",\"{#AS_CONFIG_METRIC_MULTIPLIER}\":\"${v_multiplier}\"}"
-      count=$[count+1]
-      ;;
-
     services)
       as_service_index=${as_service_index:-0}
       as_service_index=$[as_service_index+1]
@@ -114,18 +99,18 @@ while read line;do
       count=$[count+1]
       ;;
 
-    get-config|statistics)
+    get-config)
       IFS="=" read key value <<<"${line}"
+      [ -n "${metrics_config_whitelist[${key}]}" ] || continue
+
       [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
       value=$(normalize_value ${value})
       v_type=$(value_type ${value})
-      [ -n "${metrics_statistics_counters[${key}]}" ] && v_type=count
+      v_unit=${metrics_config_units[${key}]}
+      v_multiplier=${metrics_config_multiplier[${key}]}
 
-      v_unit=${metrics_statistics_units[${key}]}
-      v_multiplier=${metrics_statistics_multiplier[${key}]}
-
-      data_json+="${data_json_comma}{\"{#AS_STATISTICS_METRIC_NAME}\":\"${key}\",\"{#AS_STATISTICS_METRIC_TYPE}\":\"${v_type}\",\"{#AS_STATISTICS_METRIC_UNIT}\":\"${v_unit}\",\"{#AS_STATISTICS_METRIC_MULTIPLIER}\":\"${v_multiplier}\"}"
+      data_json+="${data_json_comma}{\"{#AS_CONFIG_METRIC_NAME}\":\"${key}\",\"{#AS_CONFIG_METRIC_TYPE}\":\"${v_type}\",\"{#AS_CONFIG_METRIC_UNIT}\":\"${v_unit}\",\"{#AS_CONFIG_METRIC_MULTIPLIER}\":\"${v_multiplier}\"}"
       count=$[count+1]
       ;;
 
