@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 
 while getopts 'c:h:a:p:' arg;do
   case ${arg} in
