@@ -6,8 +6,8 @@
 declare -A command_function=(
   [get-config]=as_get_config
   [namespace]=as_ns_stat
-  [sets]=sets
-  [statistics]=as_sets_stat
+  [sets]=as_sets_stat
+  [statistics]=as_statistics
 )
 
 declare -A metrics_set_counters=(
