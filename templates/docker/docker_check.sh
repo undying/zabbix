@@ -15,6 +15,8 @@ while getopts 'dh:z:p:' opt;do
       discovery=1
       ;;
     *)
+      echo "Usage: $0 [options]"
+      exit
   esac
 done
 
@@ -65,7 +67,7 @@ docker_discovery_json_head='{"data":['
 docker_discovery_json_tail=']}'
 docker_discovery_json="${docker_discovery_json_head}"
 
-docker_inspect_format='Name:{{.Name}},RestartCount:{{.RestartCount}}'
+docker_inspect_format='Name:{{.Name}},RestartCount:{{.RestartCount}},IPAddress:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 docker_stats_format="id cpu mem_usage mem_usage_unit _ mem_limit mem_limit_unit mem_percent net_read net_read_unit _ net_write net_write_unit block_read block_read_unit _ block_write block_write_unit pids"
 
 function docker_discovery(){
@@ -77,6 +79,8 @@ function docker_discovery(){
     IFS=,
     for line in $(docker inspect --format "${docker_inspect_format}" ${container_id});do
       IFS=":" read key value <<<"${line}"
+      [ -n "${value}" ] || continue
+
       docker_discovery_json+=",\"{#${key^^}}\":\"${value#/}\""
     done
     unset IFS
