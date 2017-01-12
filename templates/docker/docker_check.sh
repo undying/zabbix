@@ -109,7 +109,7 @@ function docker_stats(){
 
       echo "docker_stats[${id},${key}]" $(awk "BEGIN {printf \"%f\", ${!key} * ${docker_stats_multiplier[${!unit}]}}") >> ${zabbix_data_tmp}
     done
-  done < <(docker stats --no-stream)
+  done < <(timeout 4 docker stats --no-stream)
 
   mv ${zabbix_data_tmp} ${zabbix_data}
   echo $[count-1]
