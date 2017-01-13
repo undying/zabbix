@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2016-12-27T16:34:55Z</date>
+    <date>2017-01-13T09:14:21Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -497,8 +497,68 @@
                             <logtimefmt/>
                             <application_prototypes/>
                         </item_prototype>
+                        <item_prototype>
+                            <name>Docker Stats - {#NAME} ($1 cpu)</name>
+                            <type>0</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>proc.cpu.util[docker-proxy,,,docker-proxy .* {#IPADDRESS} ]</key>
+                            <delay>30</delay>
+                            <history>14</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>0</value_type>
+                            <allowed_hosts/>
+                            <units>%</units>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Docker</name>
+                                </application>
+                            </applications>
+                            <valuemap/>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{template_app_docker:proc.cpu.util[docker-proxy,,,docker-proxy .* {#IPADDRESS} ].last()}&gt;80</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Docker Stats - {#NAME} (docker-proxy cpu)</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>3</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
                         <trigger_prototype>
                             <expression>{template_app_docker:docker_stats[{#ID},mem_percent].last()}&gt;85</expression>
                             <recovery_mode>0</recovery_mode>
