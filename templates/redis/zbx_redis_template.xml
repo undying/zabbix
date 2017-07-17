@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2016-12-13T09:04:05Z</date>
+    <date>2017-07-17T19:30:35Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -19,19 +19,19 @@
             </groups>
             <applications>
                 <application>
-                    <name>redis</name>
+                    <name>Redis</name>
                 </application>
             </applications>
             <items>
                 <item>
                     <name>Redis Server Availability</name>
-                    <type>0</type>
+                    <type>3</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>net.tcp.port[127.0.0.1,6379]</key>
+                    <key>net.tcp.service[tcp,{HOST.NAME},{$REDIS_PORT}]</key>
                     <delay>30</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -60,7 +60,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -74,7 +74,7 @@
                     <snmp_oid/>
                     <key>redis.calculated[used_memory_pct]</key>
                     <delay>30</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -103,7 +103,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -117,7 +117,7 @@
                     <snmp_oid/>
                     <key>redis[aof_enabled]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -146,7 +146,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -160,7 +160,7 @@
                     <snmp_oid/>
                     <key>redis[aof_rewrite_in_progress]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -189,7 +189,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -203,7 +203,7 @@
                     <snmp_oid/>
                     <key>redis[aof_rewrite_scheduled]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -232,7 +232,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -246,7 +246,7 @@
                     <snmp_oid/>
                     <key>redis[arch_bits]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -275,7 +275,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -289,7 +289,7 @@
                     <snmp_oid/>
                     <key>redis[blocked_clients]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -318,7 +318,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -332,7 +332,7 @@
                     <snmp_oid/>
                     <key>redis[client_biggest_input_buf]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -361,7 +361,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -375,7 +375,7 @@
                     <snmp_oid/>
                     <key>redis[client_longest_output_list]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -404,7 +404,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -418,7 +418,7 @@
                     <snmp_oid/>
                     <key>redis[connected_clients]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -447,7 +447,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -461,7 +461,7 @@
                     <snmp_oid/>
                     <key>redis[connected_slaves]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -490,7 +490,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -504,7 +504,7 @@
                     <snmp_oid/>
                     <key>redis[evicted_keys]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -533,7 +533,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -547,7 +547,7 @@
                     <snmp_oid/>
                     <key>redis[expired_keys]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -576,7 +576,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -590,7 +590,7 @@
                     <snmp_oid/>
                     <key>redis[gcc_version]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -619,7 +619,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -633,7 +633,7 @@
                     <snmp_oid/>
                     <key>redis[instantaneous_ops_per_sec]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -662,7 +662,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -676,7 +676,7 @@
                     <snmp_oid/>
                     <key>redis[keyspace_hits]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -705,7 +705,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -719,7 +719,7 @@
                     <snmp_oid/>
                     <key>redis[keyspace_misses]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -748,7 +748,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -762,7 +762,7 @@
                     <snmp_oid/>
                     <key>redis[latest_fork_usec]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -791,7 +791,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -805,7 +805,7 @@
                     <snmp_oid/>
                     <key>redis[llenall]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -834,7 +834,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -848,7 +848,7 @@
                     <snmp_oid/>
                     <key>redis[loading]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -877,7 +877,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -891,7 +891,7 @@
                     <snmp_oid/>
                     <key>redis[lru_clock]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -920,7 +920,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -934,7 +934,7 @@
                     <snmp_oid/>
                     <key>redis[maxmemory]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -963,7 +963,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -977,7 +977,7 @@
                     <snmp_oid/>
                     <key>redis[maxmemory_policy]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1006,7 +1006,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1020,7 +1020,7 @@
                     <snmp_oid/>
                     <key>redis[mem_fragmentation_ratio]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>0</value_type>
@@ -1049,7 +1049,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1063,7 +1063,7 @@
                     <snmp_oid/>
                     <key>redis[multiplexing_api]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1092,7 +1092,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1106,7 +1106,7 @@
                     <snmp_oid/>
                     <key>redis[pubsub_channels]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1135,7 +1135,93 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Redis $2 ($1)</name>
+                    <type>2</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>redis[qbuf_max]</key>
+                    <delay>0</delay>
+                    <history>14</history>
+                    <trends>365</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Redis</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Redis ($1)</name>
+                    <type>2</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>redis[qbuf_top]</key>
+                    <delay>0</delay>
+                    <history>14</history>
+                    <trends>0</trends>
+                    <status>0</status>
+                    <value_type>4</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1149,7 +1235,7 @@
                     <snmp_oid/>
                     <key>redis[rdb_bgsave_in_progress]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1178,7 +1264,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1192,7 +1278,7 @@
                     <snmp_oid/>
                     <key>redis[rdb_changes_since_last_save]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1221,7 +1307,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1235,7 +1321,7 @@
                     <snmp_oid/>
                     <key>redis[redis_git_dirty]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1264,7 +1350,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1278,7 +1364,7 @@
                     <snmp_oid/>
                     <key>redis[redis_git_sha1]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1307,7 +1393,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1321,7 +1407,7 @@
                     <snmp_oid/>
                     <key>redis[redis_mode]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1350,7 +1436,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1364,7 +1450,7 @@
                     <snmp_oid/>
                     <key>redis[redis_version]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1393,7 +1479,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1407,7 +1493,7 @@
                     <snmp_oid/>
                     <key>redis[rejected_connections]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1436,7 +1522,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1450,7 +1536,7 @@
                     <snmp_oid/>
                     <key>redis[role]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1479,7 +1565,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1493,7 +1579,7 @@
                     <snmp_oid/>
                     <key>redis[total_commands_processed]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1522,7 +1608,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1536,7 +1622,7 @@
                     <snmp_oid/>
                     <key>redis[total_connections_received]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1565,7 +1651,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1579,7 +1665,7 @@
                     <snmp_oid/>
                     <key>redis[uptime_in_seconds]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1608,7 +1694,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1622,7 +1708,7 @@
                     <snmp_oid/>
                     <key>redis[used_cpu_sys]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>0</value_type>
@@ -1651,7 +1737,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1665,7 +1751,7 @@
                     <snmp_oid/>
                     <key>redis[used_cpu_sys_children]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>0</value_type>
@@ -1694,7 +1780,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1708,7 +1794,7 @@
                     <snmp_oid/>
                     <key>redis[used_cpu_user]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>0</value_type>
@@ -1737,7 +1823,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1751,7 +1837,7 @@
                     <snmp_oid/>
                     <key>redis[used_cpu_user_children]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>0</value_type>
@@ -1780,7 +1866,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1794,7 +1880,7 @@
                     <snmp_oid/>
                     <key>redis[used_memory]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1823,7 +1909,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1837,7 +1923,7 @@
                     <snmp_oid/>
                     <key>redis[used_memory_peak]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1866,7 +1952,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1880,7 +1966,7 @@
                     <snmp_oid/>
                     <key>redis[used_memory_rss]</key>
                     <delay>0</delay>
-                    <history>30</history>
+                    <history>14</history>
                     <trends>365</trends>
                     <status>0</status>
                     <value_type>3</value_type>
@@ -1909,7 +1995,7 @@
                     <inventory_link>0</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -1921,9 +2007,9 @@
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>redis_check.sh[-h,{HOST.NAME},-a,{HOST.HOST}]</key>
+                    <key>redis_check.sh[-h,{HOST.NAME}]</key>
                     <delay>30</delay>
-                    <history>30</history>
+                    <history>1</history>
                     <trends>0</trends>
                     <status>0</status>
                     <value_type>4</value_type>
@@ -1952,7 +2038,7 @@
                     <inventory_link>16</inventory_link>
                     <applications>
                         <application>
-                            <name>redis</name>
+                            <name>Redis</name>
                         </application>
                     </applications>
                     <valuemap/>
@@ -2037,7 +2123,7 @@
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>redis</name>
+                                    <name>Redis</name>
                                 </application>
                             </applications>
                             <valuemap/>
@@ -2081,7 +2167,7 @@
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>redis</name>
+                                    <name>Redis</name>
                                 </application>
                             </applications>
                             <valuemap/>
@@ -2125,7 +2211,7 @@
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
-                                    <name>redis</name>
+                                    <name>Redis</name>
                                 </application>
                             </applications>
                             <valuemap/>
@@ -2139,14 +2225,59 @@
                 </discovery_rule>
             </discovery_rules>
             <httptests/>
-            <macros/>
+            <macros>
+                <macro>
+                    <macro>{$REDIS_HOST}</macro>
+                    <value>{HOST.HOST}</value>
+                </macro>
+                <macro>
+                    <macro>{$REDIS_PORT}</macro>
+                    <value>6379</value>
+                </macro>
+                <macro>
+                    <macro>{$REDIS_QBUF_MAX}</macro>
+                    <value>0</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
     </templates>
     <triggers>
         <trigger>
-            <expression>{Template App Redis:net.tcp.port[127.0.0.1,6379].last(0)}=0</expression>
+            <expression>{Template App Redis:redis[loading].last()}&gt;0</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Redis (loading)</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>3</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Template App Redis:redis[qbuf_max].last()}&gt;0 and {Template App Redis:redis[qbuf_top].strlen()}&gt;0</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Redis (qbuf)</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>3</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Template App Redis:net.tcp.service[tcp,{HOST.NAME},{$REDIS_PORT}].last(0)}=0</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Redis is down on {HOSTNAME}</name>
