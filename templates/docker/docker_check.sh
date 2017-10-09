@@ -99,17 +99,22 @@ function docker_stats(){
 
     read ${docker_stats_format} <<<"${line}"
     for key in ${docker_stats_format};do
+      [ -n "${!key}" ] || continue
       [ -z "${docker_skip_keys[${key}]}" ] || continue
 
       local unit=${docker_stats_metric_bytes[${key}]}
       if [ -z "${unit}" ];then
-        echo "docker_stats[${id},${key}] ${!key//%/}" >> ${zabbix_data_tmp}
+        echo "docker_stats[${id},${key}] ${!key//\%/}" >> ${zabbix_data_tmp}
         continue
       fi
 
-      echo "docker_stats[${id},${key}]" $(awk "BEGIN {printf \"%f\", ${!key} * ${docker_stats_multiplier[${!unit}]}}") >> ${zabbix_data_tmp}
+      local value=${!key//[a-zA-Z]/}
+      local unit_size=${docker_stats_multiplier[${!unit}]}
+      [ -n "${unit_size}" ] || unit_size=${docker_stats_multiplier[${!key//[.0-9]/}]}
+
+      echo "docker_stats[${id},${key}]" $(awk "BEGIN {printf \"%f\", ${value} * ${unit_size}}") >> ${zabbix_data_tmp}
     done
-  done < <(timeout 4 docker stats --no-stream)
+  done < <(timeout 4 docker stats --no-stream|sed -e 's,[[:space:]]\([.0-9]\+\)\([a-zA-Z]\+\)[[:space:]], \1 \2 ,g')
 
   mv ${zabbix_data_tmp} ${zabbix_data}
   echo $[count-1]
