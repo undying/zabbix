@@ -110,12 +110,12 @@ function as_ns_stat(){
   while read line;do
     IFS="=" read key value <<<"${line}"
 
-    [ -z "${metrics_namespace_blacklist[${key}]}" ] || continue
+    [ -n "${metrics_namespace_whitelist[${key}]}" ] || continue
 
     value=$(normalize_value ${value})
     local v_type=$(value_type ${value})
 
-    [ -z "${metrics_namespace_counters[${key}]}" ] || v_type=count
+    [ -n "${metrics_namespace_counters[${key}]}" ] && v_type=count
 
     echo "\"${aerospike_host}\" as_namespace[${aerospike_namespace},${v_type},${key}] ${value}" >> ${data_file}
   done < <(${asinfo_cmd})

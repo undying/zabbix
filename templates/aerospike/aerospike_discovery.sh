@@ -70,7 +70,7 @@ while read line;do
     namespaces)
       while read ns_line;do
         IFS="=" read key value <<<"${ns_line}"
-        [ -z "${metrics_namespace_blacklist[${key}]}" ] || continue
+        [ -n "${metrics_namespace_whitelist[${key}]}" ] || continue
         [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
         value=$(normalize_value ${value})
