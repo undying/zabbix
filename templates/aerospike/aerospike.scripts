@@ -53,7 +53,7 @@ function as_get_config(){
     local v_type=$(value_type ${value})
 
     local v_multiplier=${metrics_config_multiplier[${key}]}
-    [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
+    [ -n "${v_multiplier}" ] && key+=,${v_multiplier} || key+=,1
 
     echo "\"${aerospike_host}\" as[get-config,${v_type},${key}] ${value}" >> ${data_file}
   done < <(${asinfo_cmd})
@@ -74,7 +74,7 @@ function as_statistics(){
     [ -n "${metrics_statistics_counters[${key}]}" ] && v_type=count
 
     local v_multiplier=${metrics_statistics_multiplier[${key}]}
-    [ -n "${v_multiplier}" ] && key+=,${v_multiplier}
+    [ -n "${v_multiplier}" ] && key+=,${v_multiplier} || key+=,1
 
     echo "\"${aerospike_host}\" as_statistics[${v_type},${key}] ${value}" >> ${data_file}
   done < <(${asinfo_cmd})
