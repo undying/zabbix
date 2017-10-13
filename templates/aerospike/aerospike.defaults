@@ -196,7 +196,6 @@ declare -A metrics_namespace_units=(
   [memory_used_data_bytes]=B
   [memory_used_index_bytes]=B
   [memory_used_sindex_bytes]=B
-
   [cache_read_pct]=%
   [device_available_pct]=%
   [device_free_pct]=%
@@ -273,7 +272,6 @@ declare -A metrics_statistics_units=(
   [heap_active_kbytes]=B
   [heap_allocated_kbytes]=B
   [heap_mapped_kbytes]=B
-
   [system_free_mem_pct]=%
   [heap_efficiency_pct]=%
 )
