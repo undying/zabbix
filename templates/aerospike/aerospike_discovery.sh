@@ -126,5 +126,5 @@ while read line;do
 done < <(${asinfo_cmd} -v ${aerospike_command})
 
 data_json+=${data_json_tail}
-echo ${data_json}
+printf "%s" ${data_json}
 
