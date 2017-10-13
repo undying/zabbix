@@ -89,6 +89,7 @@ while read line;do
 
     statistics)
       IFS="=" read key value <<<"${line}"
+      [ -n "${metrics_statistics_whitelist[${key}]}" ] || continue
       [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
       value=$(normalize_value ${value})
