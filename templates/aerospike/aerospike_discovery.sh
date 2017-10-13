@@ -64,6 +64,9 @@ while read line;do
     services)
       as_service_index=${as_service_index:-0}
       as_service_index=$[as_service_index+1]
+
+      [ ${as_service_index} -gt 1 ] && data_json_comma=,
+
       data_json+="${data_json_comma}{\"{#AS_SERVICE}\":\"${line}\",\"{#AS_SERVICE_INDEX}\":\"${as_service_index}\"}"
       ;;
 

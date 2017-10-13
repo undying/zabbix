@@ -210,6 +210,29 @@ declare -A metrics_namespace_units=(
   [storage-engine.min-avail-pct]=%
 )
 
+declare -A metrics_statistics_whitelist=(
+  [cluster_size]=1
+  [cluster_integrity]=1
+  [cluster_is_member]=1
+  [uptime]=1
+  [system_free_mem_pct]=1
+  [heap_allocated_kbytes]=1
+  [heap_active_kbytes]=1
+  [heap_mapped_kbytes]=1
+  [heap_efficiency_pct]=1
+  [objects]=1
+  [tsvc_queue]=1
+  [info_queue]=1
+  [delete_queue]=1
+  [rw_in_progress]=1
+  [proxy_in_progress]=1
+  [client_connections]=1
+  [heartbeat_connections]=1
+  [reaped_fds]=1
+  [batch_queue]=1
+  [scans_active]=1
+  [migrate_partitions_remaining]=1
+)
 declare -A metrics_statistics_counters=(
   [demarshal_error]=1
   [early_tsvc_batch_sub_error]=1

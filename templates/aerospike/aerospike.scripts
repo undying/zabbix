@@ -11,6 +11,9 @@ function value_type(){
   local value=${1}
 
   case ${value} in
+    [0-9]*.[0-9]*)
+      echo float
+      ;;
     [0-9]*)
       echo int
       ;;
@@ -63,6 +66,7 @@ function as_statistics(){
 
   while read line;do
     IFS="=" read key value <<<"${line}"
+    [ -n "${metrics_statistics_whitelist[${key}]}" ] || continue
 
     value=$(normalize_value ${value})
     local v_type=$(value_type ${value})
