@@ -73,6 +73,8 @@ while read line;do
     namespaces)
       while read ns_line;do
         IFS="=" read key value <<<"${ns_line}"
+        [ -n "${key}" ] || continue
+
         [ -n "${metrics_namespace_whitelist[${key}]}" ] || continue
         [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
