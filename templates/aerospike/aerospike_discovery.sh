@@ -48,6 +48,7 @@ while read line;do
       for set_line in ${line#*:*:};do
         [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
         IFS="=" read key value <<<"${set_line}"
+        [ -n "${key}" ] || continue
 
         value=$(normalize_value ${value})
         v_type=$(value_type ${value})
@@ -91,6 +92,8 @@ while read line;do
 
     statistics)
       IFS="=" read key value <<<"${line}"
+      [ -n "${key}" ] || continue
+
       [ -n "${metrics_statistics_whitelist[${key}]}" ] || continue
       [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
@@ -107,8 +110,9 @@ while read line;do
 
     get-config)
       IFS="=" read key value <<<"${line}"
-      [ -n "${metrics_config_whitelist[${key}]}" ] || continue
+      [ -n "${key}" ] || continue
 
+      [ -n "${metrics_config_whitelist[${key}]}" ] || continue
       [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
 
       value=$(normalize_value ${value})
