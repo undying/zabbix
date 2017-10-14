@@ -68,7 +68,7 @@ while read line;do
 
       [ ${as_service_index} -gt 1 ] && data_json_comma=,
 
-      data_json+="${data_json_comma}{\"{#AS_SERVICE}\":\"${line}\",\"{#AS_SERVICE_INDEX}\":\"${as_service_index}\"}"
+      data_json+="${data_json_comma}{\"{#AS_SERVICE}\":\"${line}\",\"{#AS_SERVICE_HOST}\":\"${line%:*}\",\"{#AS_SERVICE_PORT}\":\"${line#*:}\",\"{#AS_SERVICE_INDEX}\":\"${as_service_index}\"}"
       ;;
 
     namespaces)
