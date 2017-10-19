@@ -59,6 +59,10 @@ while read line;do
         [ -n "${metrics_set_counters[${key}]}" ] && v_type=count
         v_unit=${metrics_set_units[${key}]}
 
+        if [ -n "${filter_type}" ];then
+          [ "${filter_type}" == "${v_type}" ] || continue
+        fi
+
         data_json+="${data_json_comma}{\"{#AS_NS}\":\"${as_ns}\",\"{#AS_SET_NAME}\":\"${as_set}\",\"{#AS_SET_METRIC_NAME}\":\"${key}\",\"{#AS_SET_METRIC_TYPE}\":\"${v_type}\",\"{#AS_SET_METRIC_UNIT}\":\"${v_unit}\"}"
         count=$[count+1]
       done
