@@ -23,6 +23,9 @@ while getopts 'c:n:h:a:p:Z:P:' arg;do
     P)
       zabbix_port=${OPTARG}
       ;;
+    t)
+      filter_type=${OPTARG}
+      ;;
     *)
       echo "usage: ${0} -h [aerospike_host] -p [aerospike_port]"
       exit

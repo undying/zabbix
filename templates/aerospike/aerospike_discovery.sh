@@ -14,6 +14,9 @@ while getopts 'c:h:a:p:' arg;do
     p)
       aerospike_port=${OPTARG}
       ;;
+    t)
+      filter_type=${OPTARG}
+      ;;
     *)
       echo "usage: ${0} -h [aerospike_host] -p [aerospike_port]"
       exit
@@ -71,7 +74,7 @@ while read line;do
       data_json+="${data_json_comma}{\"{#AS_SERVICE}\":\"${line}\",\"{#AS_SERVICE_HOST}\":\"${line%:*}\",\"{#AS_SERVICE_PORT}\":\"${line#*:}\",\"{#AS_SERVICE_INDEX}\":\"${as_service_index}\"}"
       ;;
 
-    namespaces)
+    namespace_metrics)
       while read ns_line;do
         IFS="=" read key value <<<"${ns_line}"
         [ -n "${key}" ] || continue
@@ -85,9 +88,22 @@ while read line;do
         [ -n "${metrics_namespace_counters[${key}]}" ] && v_type=count
         v_unit=${metrics_namespace_units[${key}]}
 
+        if [ -n "${filter_type}" ];then
+          [ "${filter_type}" == "${v_type}" ] || continue
+        fi
+
         data_json+="${data_json_comma}{\"{#AS_NS}\":\"${line}\",\"{#AS_NS_METRIC_NAME}\":\"${key}\",\"{#AS_NS_METRIC_TYPE}\":\"${v_type}\",\"{#AS_NS_METRIC_UNIT}\":\"${v_unit}\"}"
         count=$[count+1]
       done < <(${asinfo_cmd} -v "namespace/${line}")
+      ;;
+
+    namespaces)
+      while read ns;do
+        [ ${count} -eq 0 ] && data_json_comma="" || data_json_comma=,
+        data_json+="${data_json_comma}{\"{#AS_NS}\":\"${ns}\"}"
+
+        count=$[count+1]
+      done < <(${asinfo_cmd} -v "namespaces")
       ;;
 
     statistics)
