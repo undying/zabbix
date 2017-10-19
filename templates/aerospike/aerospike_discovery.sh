@@ -124,6 +124,10 @@ while read line;do
       v_unit=${metrics_statistics_units[${key}]}
       v_multiplier=${metrics_statistics_multiplier[${key}]}
 
+      if [ -n "${filter_type}" ];then
+        [ "${filter_type}" == "${v_type}" ] || continue
+      fi
+
       data_json+="${data_json_comma}{\"{#AS_STATISTICS_METRIC_NAME}\":\"${key}\",\"{#AS_STATISTICS_METRIC_TYPE}\":\"${v_type}\",\"{#AS_STATISTICS_METRIC_UNIT}\":\"${v_unit}\",\"{#AS_STATISTICS_METRIC_MULTIPLIER}\":\"${v_multiplier}\"}"
       count=$[count+1]
       ;;
@@ -139,6 +143,10 @@ while read line;do
       v_type=$(value_type ${value})
       v_unit=${metrics_config_units[${key}]}
       v_multiplier=${metrics_config_multiplier[${key}]}
+
+      if [ -n "${filter_type}" ];then
+        [ "${filter_type}" == "${v_type}" ] || continue
+      fi
 
       data_json+="${data_json_comma}{\"{#AS_CONFIG_METRIC_NAME}\":\"${key}\",\"{#AS_CONFIG_METRIC_TYPE}\":\"${v_type}\",\"{#AS_CONFIG_METRIC_UNIT}\":\"${v_unit}\",\"{#AS_CONFIG_METRIC_MULTIPLIER}\":\"${v_multiplier}\"}"
       count=$[count+1]
