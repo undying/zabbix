@@ -1,6 +1,6 @@
 #! /bin/bash
 
-while getopts 'c:h:a:p:' arg;do
+while getopts 'c:h:a:p:t:' arg;do
   case ${arg} in
     c)
       aerospike_command=${OPTARG}
