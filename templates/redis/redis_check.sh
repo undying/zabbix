@@ -46,7 +46,7 @@ data_json=${data_json_head}
 
 
 ### discover databases and collect metrics ###
-db_count=0
+comma_count=0
 comma=""
 
 while read line;do
@@ -66,14 +66,24 @@ while read line;do
       echo "\"${redis_host}\" redis[${key},${k}] ${v}" >> ${data_file}
     done
 
-    [ "${db_count}" -eq 0 ] && comma="" || comma=","
+    [ "${comma_count}" -eq 0 ] && comma="" || comma=","
 
-    data_json="${data_json}${comma}{\"{#DBNAME}\":\"${key}\"}"
-    db_count=$[db_count+1]
+    data_json+="${comma}{\"{#DBNAME}\":\"${key}\"}"
+    comma_count=$[comma_count+1]
+  elif [ ${key:0:7} == "cmdstat" ];then
+    for kv in ${value//,/ };do
+      IFS="=" read k v <<<"${kv}"
+      echo "\"${redis_host}\" redis[${key},${k}] ${v}" >> ${data_file}
+    done
+
+    [ "${comma_count}" -eq 0 ] && comma="" || comma=","
+
+    data_json+="${comma}{\"{#CMDNAME\":\"${key}\"}"
+    comma_count=$[comma_count+1]
   else
     echo "\"${redis_host}\" redis[${key}] ${value}" >> ${data_file}
   fi
-done < <(${timeout_cmd} /bin/bash -c "exec 3<> /dev/tcp/${redis_addr}/${redis_port}; printf 'info\r\n' >&3; cat <&3")
+done < <(${timeout_cmd} /bin/bash -c "exec 3<> /dev/tcp/${redis_addr}/${redis_port}; printf 'info all\r\n' >&3; cat <&3")
 ###
 
 
