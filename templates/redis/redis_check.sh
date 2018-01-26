@@ -3,7 +3,7 @@
 tcp_timeout=1
 timeout_cmd="timeout --preserve-status ${tcp_timeout}"
 
-data_json_head='{"data":['
+data_json_head='{\"data\":['
 data_json_tail=']}'
 
 json_db=""
@@ -51,10 +51,8 @@ zbx_sender_cmd="zabbix_sender -vv -z ${zabbix_host} -p ${zabbix_port}"
 
 for i in db cmd;do
   json=json_${i}
-  eval ${json}+=${data_json_head}
+  eval ${json}+="${data_json_head}"
 done
-##json_db+=${data_json_head}
-##json_cmd+=${data_json_head}
 
 
 ### discover databases and collect metrics ###
