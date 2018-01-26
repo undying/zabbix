@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2018-01-26T15:45:12Z</date>
+    <date>2018-01-26T16:33:08Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -2203,14 +2203,7 @@
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
-                        <conditions>
-                            <condition>
-                                <macro>{#DBNAME}</macro>
-                                <value/>
-                                <operator>8</operator>
-                                <formulaid>A</formulaid>
-                            </condition>
-                        </conditions>
+                        <conditions/>
                     </filter>
                     <lifetime>1</lifetime>
                     <description/>
