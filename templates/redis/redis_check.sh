@@ -86,7 +86,7 @@ while read line;do
 
     [ "${cmd_comma_count}" -eq 0 ] && comma="" || comma=","
 
-    json_cmd+="${comma}{\"{#CMDNAME\":\"${key}\"}"
+    json_cmd+="${comma}{\"{#CMDNAME}\":\"${key}\"}"
     cmd_comma_count=$[cmd_comma_count+1]
   else
     echo "\"${redis_host}\" redis[${key}] ${value}" >> ${data_file}
