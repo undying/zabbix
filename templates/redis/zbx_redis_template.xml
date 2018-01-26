@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2018-01-25T18:09:10Z</date>
+    <date>2018-01-26T15:45:12Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -2176,11 +2176,11 @@
             </items>
             <discovery_rules>
                 <discovery_rule>
-                    <name>Redis Database Discovery</name>
+                    <name>Redis Commands Discovery</name>
                     <type>2</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>redis.discovery</key>
+                    <key>redis.discovery[cmd]</key>
                     <delay>0</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -2212,7 +2212,7 @@
                             </condition>
                         </conditions>
                     </filter>
-                    <lifetime>30</lifetime>
+                    <lifetime>1</lifetime>
                     <description/>
                     <item_prototypes>
                         <item_prototype>
@@ -2223,8 +2223,8 @@
                             <snmp_oid/>
                             <key>redis[{#CMDNAME},calls]</key>
                             <delay>0</delay>
-                            <history>3</history>
-                            <trends>90</trends>
+                            <history>7</history>
+                            <trends>365</trends>
                             <status>0</status>
                             <value_type>3</value_type>
                             <allowed_hosts/>
@@ -2267,8 +2267,8 @@
                             <snmp_oid/>
                             <key>redis[{#CMDNAME},usec]</key>
                             <delay>0</delay>
-                            <history>3</history>
-                            <trends>90</trends>
+                            <history>7</history>
+                            <trends>365</trends>
                             <status>0</status>
                             <value_type>3</value_type>
                             <allowed_hosts/>
@@ -2311,13 +2311,13 @@
                             <snmp_oid/>
                             <key>redis[{#CMDNAME},usec_per_call]</key>
                             <delay>0</delay>
-                            <history>3</history>
-                            <trends>90</trends>
+                            <history>7</history>
+                            <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
-                            <delta>2</delta>
+                            <delta>0</delta>
                             <snmpv3_contextname/>
                             <snmpv3_securityname/>
                             <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -2347,6 +2347,51 @@
                             <logtimefmt/>
                             <application_prototypes/>
                         </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes/>
+                    <graph_prototypes/>
+                    <host_prototypes/>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Redis Database Discovery</name>
+                    <type>2</type>
+                    <snmp_community/>
+                    <snmp_oid/>
+                    <key>redis.discovery[db]</key>
+                    <delay>0</delay>
+                    <status>0</status>
+                    <allowed_hosts/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <filter>
+                        <evaltype>0</evaltype>
+                        <formula/>
+                        <conditions>
+                            <condition>
+                                <macro>{#DBNAME}</macro>
+                                <value/>
+                                <operator>8</operator>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>1</lifetime>
+                    <description/>
+                    <item_prototypes>
                         <item_prototype>
                             <name>Redis {#DBNAME} ($2)</name>
                             <type>2</type>
