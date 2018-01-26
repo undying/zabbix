@@ -3,9 +3,15 @@
 tcp_timeout=1
 timeout_cmd="timeout --preserve-status ${tcp_timeout}"
 
-data_json=""
 data_json_head='{"data":['
 data_json_tail=']}'
+
+json_db=""
+json_cmd=""
+
+comma=""
+db_comma_count=0
+cmd_comma_count=0
 
 data_file="$(mktemp --suffix -zabbix_sender)"
 data_json_file=$(mktemp --suffix -zabbix_sender_json)
@@ -42,12 +48,16 @@ zabbix_host=${zabbix_host:-127.0.0.1}
 zabbix_port=${zabbix_port:-10051}
 
 zbx_sender_cmd="zabbix_sender -vv -z ${zabbix_host} -p ${zabbix_port}"
-data_json=${data_json_head}
+
+for i in db cmd;do
+  json=json_${i}
+  eval ${json}+=${data_json_head}
+done
+##json_db+=${data_json_head}
+##json_cmd+=${data_json_head}
 
 
 ### discover databases and collect metrics ###
-comma_count=0
-comma=""
 
 while read line;do
   line=${line//$'\r'/}
@@ -66,20 +76,20 @@ while read line;do
       echo "\"${redis_host}\" redis[${key},${k}] ${v}" >> ${data_file}
     done
 
-    [ "${comma_count}" -eq 0 ] && comma="" || comma=","
+    [ "${db_comma_count}" -eq 0 ] && comma="" || comma=","
 
-    data_json+="${comma}{\"{#DBNAME}\":\"${key}\"}"
-    comma_count=$[comma_count+1]
+    json_db+="${comma}{\"{#DBNAME}\":\"${key}\"}"
+    db_comma_count=$[db_comma_count+1]
   elif [ ${key:0:7} == "cmdstat" ];then
     for kv in ${value//,/ };do
       IFS="=" read k v <<<"${kv}"
       echo "\"${redis_host}\" redis[${key},${k}] ${v}" >> ${data_file}
     done
 
-    [ "${comma_count}" -eq 0 ] && comma="" || comma=","
+    [ "${cmd_comma_count}" -eq 0 ] && comma="" || comma=","
 
-    data_json+="${comma}{\"{#CMDNAME\":\"${key}\"}"
-    comma_count=$[comma_count+1]
+    json_cmd+="${comma}{\"{#CMDNAME\":\"${key}\"}"
+    cmd_comma_count=$[cmd_comma_count+1]
   else
     echo "\"${redis_host}\" redis[${key}] ${value}" >> ${data_file}
   fi
@@ -109,11 +119,15 @@ echo \"${redis_host}\" \"redis[qbuf_top]\" \"${redis_qbuf_top}\" >> ${data_file}
 echo \"${redis_host}\" redis[qbuf_max] ${redis_qbuf_max} >> ${data_file}
 
 
-data_json="${data_json}${data_json_tail}"
-echo "\"${redis_host}\" redis.discovery ${data_json}" > ${data_json_file}
+for i in db cmd;do
+  json=json_${i}
+  eval ${json}+=${data_json_tail}
+  echo "\"${redis_host}\" redis.discovery[${i}] ${!json}" > ${data_json_file}
+
+  ${zbx_sender_cmd} -i ${data_json_file}
+done
 
 
-${zbx_sender_cmd} -i ${data_json_file}
 ${zbx_sender_cmd} -i ${data_file}
 
 
